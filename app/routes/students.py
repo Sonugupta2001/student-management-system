@@ -6,10 +6,10 @@ from typing import Optional
 from fastapi import Query
 from bson import ObjectId
 
-router = APIRouter()
+
+#--------------------------------------------------------------------------------------------------------------#
 
 def serialize_mongo_document(document):
-    """Convert MongoDB document to a serializable format."""
     return {
         "id": str(document["_id"]),
         "name": document.get("name"),
@@ -17,8 +17,10 @@ def serialize_mongo_document(document):
         "address": document.get("address", {})
     }
 
+#--------------------------------------------------------------------------------------------------------------#
 
 
+router = APIRouter()
 
 
 @router.post("/students", status_code=201)
@@ -27,6 +29,7 @@ async def create_student(student: Student):
     
     result = await students_collection.insert_one(student_dict)
     return {"id": str(result.inserted_id)}
+
 
 
 
@@ -52,6 +55,7 @@ async def list_students(
                 })
 
     return {"data": students}
+
 
 
 
@@ -101,7 +105,6 @@ async def update_student(id: str, student_update: StudentUpdate, response: Respo
         return {}
     except Exception as e:
         raise HTTPException(status_code=400, detail="Failed to update student")
-
 
 
 
