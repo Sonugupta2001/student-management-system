@@ -97,7 +97,7 @@ async def update_student(id: str, student_update: StudentUpdate, response: Respo
         if result.modified_count == 0:
             raise HTTPException(status_code=404, detail="Student not found or no change")
         
-        # response.status_code = 204
+        response.status_code = 204
         return {}
     except Exception as e:
         raise HTTPException(status_code=400, detail="Failed to update student")
